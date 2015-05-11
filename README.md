@@ -74,4 +74,11 @@ This code implements a solution for the stated tasks. However, some questions ma
 
 2. Fix the memory leak, for example, let the ```Ping``` actor stop itself when it has done its job. For this, look at what's available under the actor's context.
 
- 
+##Exercise 2 - Solution & discussion
+
+The sending of ```Ping``` messages at regular intervals can be implemented in many ways... In the given solution, the ```Pinger``` actor uses the scheduler to schedule delivery of the required ```Ping``` messages to itself at the right moment.
+
+- Also note the utilisation of ```context.stop(self)``` to stop the ```Pinger``` actor.
+
+- Notice the need to bring an (implicit) execution scope into context - this is needed by the ```scheduleOnce``` method
+
