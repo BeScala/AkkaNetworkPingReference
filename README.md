@@ -62,10 +62,16 @@ Your tasks:
 
 This code implements a solution for the stated tasks. However, some questions may be raised:
 
-- How to implement the ```pingInterval``` behaviour - when ```pingCount``` > 1: the first ```Ping``` should be sent immediately and subsequent ```Ping``` messages should be sent sequentialyy at ```pingInterval``` intervals.
+- How to implement the ```pingInterval``` behaviour - when ```pingCount``` > 1: the first ```Ping``` should be sent immediately and subsequent ```Ping``` messages should be sent sequentially at ```pingInterval``` intervals.
 
 - In the current application, there's an obvious memory leak: ```Ping``` actors are created and, after having performed their task, are never stopped...
 
 - A number of tests have been added to the project that test the functionality of the ```Pinger``` and ```PingServer``` actors.
+
+##Exercise 2 - Implementing pingInterval
+
+1. Change ```Pinger``` to send the ```Ping``` messages at the specified interval. Have a look at an actor's access to the scheduler (```context.system.scheduler.*```). Note that we always send ```pingCount``` messages, i.e. regardless of the number of ```Response``` messages that are sent back in response.
+
+2. Fix the memory leak, for example, let the ```Ping``` actor stop itself when it has done its job. For this, look at what's available under the actor's context.
 
  
