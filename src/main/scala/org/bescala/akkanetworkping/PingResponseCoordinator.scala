@@ -1,6 +1,7 @@
 package org.bescala.akkanetworkping
 
-import akka.actor.{Props, ActorLogging, Actor}
+import akka.actor.{ActorRef, Props, ActorLogging, Actor}
+import scala.concurrent.duration.{MILLISECONDS => MS, FiniteDuration}
 
 object PingResponseCoordinator {
   case class CreatePinger(pingCount: Int, pingInterval: Int)
@@ -10,7 +11,8 @@ object PingResponseCoordinator {
 
 class PingResponseCoordinator extends Actor with ActorLogging {
 
-  val pingServer = context.actorOf(PingServer.props(), "pingServer")
+  val pingServerResponseDelay = FiniteDuration(context.system.settings.config.getDuration("AkkaNetworkPing.PingServer.responseDelay", MS), MS)
+  private val pingServer: ActorRef = context.actorOf(PingServer.props(pingServerResponseDelay), "pingServer")
   val pingMaster = context.actorOf(PingMaster.props(pingServer), "pingMaster")
 
   override def receive: Receive = {

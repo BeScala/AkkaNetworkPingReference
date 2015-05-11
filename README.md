@@ -90,6 +90,11 @@ Name the configuration parameter ```AkkaNetworkPing.Response.reponseDelay```
 
 Perform some ping tests with the ```reponseDelay``` set to 2 seconds. What is the impact on the behaviour of the application? What is causing this effect?
 
+##Exercise 3 - Solution & discussion
+
+In the proposed solution, we make sure that the ```PingServer``` actor is really busy while responding to a ```Ping```. We do this by ignoring any incoming message during during the processing of the ```Ping```. In order to achieve this, we utilise the Akka ```Stash``` trait.
+
+
 
 
 
