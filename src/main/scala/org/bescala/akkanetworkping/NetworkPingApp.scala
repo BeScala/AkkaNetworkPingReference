@@ -42,7 +42,11 @@ class NetworkPingApp(system: ActorSystem) extends CommandReader {
         commandLoop()
     }
 
+  // TODO: Create networkPingCoordinator actor here
+
+
   protected def createPinger(pingerCount: Int, pingCount: Int, pingInterval: Int) =
+    // TODO: Add appropriate action to trigger the creation of Pinger actor(s)
     log.info("Create {} Pinger(s) with ping-count = {} and ping-interval = {} ms", pingerCount, pingCount, pingInterval)
 
   protected def status(): Unit =
