@@ -20,14 +20,16 @@ class Pinger(pingServer: ActorRef, pingCount: Int, pingInterval: Int) extends Ac
   for (seq <- 1 to curPingCount)
     context.system.scheduler.scheduleOnce(Duration((seq - 1) * pingInterval, MS), pingServer, Pinger.Ping(seq))
 
-  override def receive: Receive = {
+  override def receive: Receive = receiving(pingCount)
 
-    case PingServer.Response(seq) if curPingCount == 1 =>
+  def receiving(outstandingPingSeqNum: Int): Receive = {
+
+    case PingServer.Response(seq) if outstandingPingSeqNum == 1 =>
       context.stop(self)
       log.info("Pinger({}) received final Response({})", self, seq)
 
     case PingServer.Response(seq) =>
-      curPingCount -= 1
+      context.become(receiving(outstandingPingSeqNum - 1))
       log.info("Pinger({}) received   a   Response({})", self, seq)
   }
 }
