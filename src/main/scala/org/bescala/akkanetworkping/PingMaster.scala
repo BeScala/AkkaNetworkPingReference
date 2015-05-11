@@ -9,7 +9,8 @@ object PingMaster {
 
 class PingMaster(pingServer: ActorRef) extends Actor with ActorLogging {
 
-  override def receive: Receive =
-    // TODO: Implement behaviour
-    Actor.emptyBehavior
+  override def receive: Receive = {
+    case PingResponseCoordinator.CreatePinger(pingCount, pingInterval) =>
+      context.actorOf(Pinger.props(pingServer, pingCount, pingInterval))
+  }
 }

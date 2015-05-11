@@ -11,7 +11,18 @@ object Pinger {
 
 class Pinger(pingServer: ActorRef, pingCount: Int, pingInterval: Int) extends Actor with ActorLogging {
 
-  override def receive: Receive =
-  // TODO: Implement behaviour
-    Actor.emptyBehavior
+  var curPingCount = pingCount
+
+  // Start pinging @ start
+  for (seq <- 1 to curPingCount)
+    pingServer ! Pinger.Ping(seq)
+
+  override def receive: Receive = {
+    case PingServer.Response(seq) if curPingCount == 1 =>
+      log.info("Pinger({}) received final Response({})", self, seq)
+
+    case PingServer.Response(seq) =>
+      curPingCount -= 1
+      log.info("Pinger({}) received   a   Response({})", self, seq)
+  }
 }

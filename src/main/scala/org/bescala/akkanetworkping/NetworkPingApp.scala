@@ -43,11 +43,13 @@ class NetworkPingApp(system: ActorSystem) extends CommandReader {
     }
 
   // TODO: Create networkPingCoordinator actor here
+  val networkPingCoordinator = system.actorOf(PingResponseCoordinator.props(), "networkPingCoordinator")
 
 
   protected def createPinger(pingerCount: Int, pingCount: Int, pingInterval: Int) =
     // TODO: Add appropriate action to trigger the creation of Pinger actor(s)
-    log.info("Create {} Pinger(s) with ping-count = {} and ping-interval = {} ms", pingerCount, pingCount, pingInterval)
+    for ( _ <- 1 to pingerCount)
+      networkPingCoordinator ! PingResponseCoordinator.CreatePinger(pingCount, pingInterval)
 
   protected def status(): Unit =
     log.info("Status command")

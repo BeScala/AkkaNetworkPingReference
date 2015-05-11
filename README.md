@@ -57,4 +57,15 @@ Your tasks:
 8. Adapt the ```createPinger``` method in the ```PingResponseApp``` (look for the TODO in the code) as to send the appropriate messages to the right actor so that the requested number of ```Pinger``` actors are created.
 
 9. Run the application, run some ping commands and verify that the output is what is expected.
+
+## Exercise 1 - Solution and discussion
+
+This code implements a solution for the stated tasks. However, some questions may be raised:
+
+- How to implement the ```pingInterval``` behaviour - when ```pingCount``` > 1: the first ```Ping``` should be sent immediately and subsequent ```Ping``` messages should be sent sequentialyy at ```pingInterval``` intervals.
+
+- In the current application, there's an obvious memory leak: ```Ping``` actors are created and, after having performed their task, are never stopped...
+
+- A number of tests have been added to the project that test the functionality of the ```Pinger``` and ```PingServer``` actors.
+
  
