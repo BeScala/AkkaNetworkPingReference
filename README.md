@@ -82,3 +82,14 @@ The sending of ```Ping``` messages at regular intervals can be implemented in ma
 
 - Notice the need to bring an (implicit) execution scope into context - this is needed by the ```scheduleOnce``` method
 
+##Exercise 3 - Introduce reaction time in PingServer actor
+
+In this exercise, we will let ```PingServer``` actor respond to ```Ping``` messages with a delay configurable in the application config settings. Change the signature of the ```PingServer``` actor as to accept this delay parameter of type ```FiniteDuration```.
+
+Name the configuration parameter ```AkkaNetworkPing.Response.reponseDelay```
+
+Perform some ping tests with the ```reponseDelay``` set to 2 seconds. What is the impact on the behaviour of the application? What is causing this effect?
+
+
+
+

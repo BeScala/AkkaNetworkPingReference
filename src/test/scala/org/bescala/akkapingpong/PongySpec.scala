@@ -20,5 +20,5 @@ class PingServerSpec extends BaseAkkaSpec {
   }
 
   def createResponseer(): ActorRef =
-    system.actorOf(PingServer.props())
+    system.actorOf(PingServer.props(100 milliseconds))
 }
