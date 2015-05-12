@@ -5,6 +5,7 @@ import scala.concurrent.duration.{MILLISECONDS => MS, FiniteDuration, Duration}
 
 object Pinger {
   case class Ping(sequenceNumber: Int)
+  case class PingTimedout(ping: Ping)
 
   def props(pingServer: ActorRef, pingCount: Int, pingInterval: Int, pingTimeout: FiniteDuration): Props =
     Props(new Pinger(pingServer, pingCount, pingInterval, pingTimeout))

@@ -154,6 +154,17 @@ When ```PingServer```'s reliability is set to a low level (e.g. 50), time-outs c
 
 Let's correct this in the next exercise.
 
+##Exercise 7 - Tuning an actor's supervision strategy
+
+In this exercise you will define the appropriate supervisory strategy for the ```PingerWorker``` actor. Also, we want to correct the bookkeeping in the ```Pinger Actor``` - the actor who's supervising the ```PingerWorker```.
+
+A new message ```PingTimedout``` message has been created to facilitate things: it can be sent to ```self``` to assist the bookkeeping process.
+
+Your tasks:
+
+- Implement the correct supervisory strategy for ```PingerWorker```
+- Correct the bookkeeping so that the ```Pinger``` actor is stopped after having received all replies (or timeout indications).
+
 
 
 
