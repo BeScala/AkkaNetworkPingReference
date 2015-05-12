@@ -116,4 +116,9 @@ Let's make ```PingServer``` a bit unreliable by having it not send a reply to a 
 - Change the signature of ```PingServer``` as to accept the ```reliability``` parameter of type ```Int```.
 - Change the behaviour of ```PingServer``` so that when it receives a ```Ping```, it throws a dice by generating a random number between 0 and 100. If this number is greater than ```reliability```, respond. Otherwise, ignore the message and continue waiting for a new ```Ping```.
 
+##Exercise 5 - Solution & discussion
+
+After the modification, we see that, in case of dropped ```Ping``` messages, the bookkeeping of the ```Pinger``` no longer fits. As a consequence, it never stop because it will keep waiting for responses that will never arrive.
+
+Observe this by running the application a number of times, setting ```reliability``` to for example 60 until at least one message is dropped.
 

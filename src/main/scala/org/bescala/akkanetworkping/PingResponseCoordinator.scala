@@ -13,7 +13,8 @@ object PingResponseCoordinator {
 class PingResponseCoordinator extends Actor with ActorLogging {
 
   val pingServerResponseDelay = FiniteDuration(context.system.settings.config.getDuration("AkkaNetworkPing.PingServer.responseDelay", MS), MS)
-  private val pingServer: ActorRef = context.actorOf(FromConfig.props(PingServer.props(pingServerResponseDelay)), "pingServer")
+  val pingServerReliability = context.system.settings.config.getInt("AkkaNetworkPing.PingServer.reliability")
+  private val pingServer: ActorRef = context.actorOf(FromConfig.props(PingServer.props(pingServerResponseDelay, pingServerReliability)), "pingServer")
 
   val pingMaster = context.actorOf(PingMaster.props(pingServer), "pingMaster")
 
