@@ -94,7 +94,7 @@ Perform some ping tests with the ```reponseDelay``` set to 2 seconds. What is th
 
 In the proposed solution, we make sure that the ```PingServer``` actor is really busy while responding to a ```Ping```. We do this by ignoring any incoming message during during the processing of the ```Ping```. In order to achieve this, we utilise the Akka ```Stash``` trait.
 
-##Exercise 3 - Solution - Alternative *Pinger* implementation
+##Exercise 3 - Solution - Alternative ```Pinger``` implementation
 
 An alternative for the utilisation of mutable state in the ```Pinger``` actor.
 
@@ -104,6 +104,9 @@ As observed during some testing, the single instance of the ```PingServer``` act
 
 Use a pooled router with round-robin routing strategy configured via Akka configuration to scale the app.
 
+##Exercise 4 - Solution & discussion
+
+Making the *Akka-Network-Ping* scale can be achieved by removing the bottleneck in the ```PingServer``` actor by turning it into a pooled router. Notice the elegance by which this can be done: a simply change in the deployment configuration and a change on one line in the source code.
 
 
 
