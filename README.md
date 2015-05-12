@@ -122,3 +122,31 @@ After the modification, we see that, in case of dropped ```Ping``` messages, the
 
 Observe this by running the application a number of times, setting ```reliability``` to for example 60 until at least one message is dropped.
 
+##Exercise 6 - Delegating work to one-off actors
+
+In this exercise you will change the behaviour of the ```Pinger``` actor in a number of ways:
+
+- Instead of ```Pinger``` sending a ```Ping``` message itself, it will delegate this task to a one-off actor named ```PingerWorker```
+
+- ```PingerWorker``` will send a ```Ping``` message it receives from ```Pinger``` to ```PingServer```.
+
+- ```PingerWorker``` will wait for a reply from ```PingServer``` for a specified amount of time: ```pingTimeout``` of type ```FiniteDuration```.
+
+- If a reply is received in time, it is sent to ```Pinger```. Otherwise, ```PingerWorker``` throws an exception.
+
+Implement the task in the following steps:
+
+- A ```PingWorker``` actor class has been set-up already.
+  - It defines an exception definition (```TimeoutException```).
+  - It defines a case class ```Timedout``` to be used in the protocol.
+  - Use the scheduler to send a message to ```self``` when the timeout period is completed.
+  - Modify the behaviour as specified in the introduction.
+  
+- Modify ```Pinger``` as follows:
+  - Let it create the appropriate number of ```PingerWorker``` actors and foreach of them, send the ```Ping``` (already scheduled in the code) to these actors.
+  - Check the behaviour for other required modifications. 
+  
+Run the application and verify if it works as expected. Set the configuration parameters in such a way that a timeout is triggered and observe what happens. Is the observed behaviour the desired one ?
+
+
+
