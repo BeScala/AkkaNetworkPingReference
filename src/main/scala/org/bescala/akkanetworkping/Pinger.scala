@@ -1,6 +1,7 @@
 package org.bescala.akkanetworkping
 
-import akka.actor.{ActorLogging, Actor, Props, ActorRef}
+import akka.actor.SupervisorStrategy._
+import akka.actor._
 import scala.concurrent.duration.{MILLISECONDS => MS, FiniteDuration, Duration}
 
 object Pinger {
@@ -14,6 +15,14 @@ object Pinger {
 
 class Pinger(pingServer: ActorRef, pingCount: Int, pingInterval: Int, pingTimeout: FiniteDuration) extends Actor with ActorLogging {
 
+  override val supervisorStrategy: SupervisorStrategy = {
+    val decider: Decider = {
+      case PingerWorker.TimeoutException(ping) =>
+        self ! Pinger.PingTimedout(ping)
+        Stop
+    }
+    OneForOneStrategy()(decider = decider orElse super.supervisorStrategy.decider)
+  }
   var curPingCount = pingCount
 
   // Start pinging @ start
@@ -35,5 +44,10 @@ class Pinger(pingServer: ActorRef, pingCount: Int, pingInterval: Int, pingTimeou
       context.become(receiving(outstandingPingSeqNum - 1))
       log.info("Pinger({}) received   a   Response({})", self, seq)
 
+    case Pinger.PingTimedout(ping) =>
+      if ( outstandingPingSeqNum == 1 )
+        context.stop(self)
+      log.info("Pinger({}), timedout on request {}", self, ping)
+      context.become(receiving(outstandingPingSeqNum - 1))
   }
 }

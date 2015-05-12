@@ -165,7 +165,8 @@ Your tasks:
 - Implement the correct supervisory strategy for ```PingerWorker```
 - Correct the bookkeeping so that the ```Pinger``` actor is stopped after having received all replies (or timeout indications).
 
+##Exercise 7 - Solution & discussion
 
-
+Note that the ```decider``` in actor ```Pinger``` *captures* the ```TimeoutException``` and specifies that the faulty actor should be stopped. Also, for bookkeeping purposes, it sends a ```PingTimedout``` message to itself which in turn leads to an update of the internal state of the actor.
 
 
