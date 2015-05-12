@@ -86,9 +86,9 @@ The sending of ```Ping``` messages at regular intervals can be implemented in ma
 
 In this exercise, we will let ```PingServer``` actor respond to ```Ping``` messages with a delay configurable in the application config settings. Change the signature of the ```PingServer``` actor as to accept this delay parameter of type ```FiniteDuration```.
 
-Name the configuration parameter ```AkkaNetworkPing.Response.reponseDelay```
+Name the configuration parameter ```AkkaNetworkPing.Response.responseDelay```
 
-Perform some ping tests with the ```reponseDelay``` set to 2 seconds. What is the impact on the behaviour of the application? What is causing this effect?
+Perform some ping tests with the ```responseDelay``` set to 2 seconds. What is the impact on the behaviour of the application? What is causing this effect?
 
 ##Exercise 3 - Solution & discussion
 
@@ -108,5 +108,12 @@ Use a pooled router with round-robin routing strategy configured via Akka config
 
 Making the *Akka-Network-Ping* scale can be achieved by removing the bottleneck in the ```PingServer``` actor by turning it into a pooled router. Notice the elegance by which this can be done: a simply change in the deployment configuration and a change on one line in the source code.
 
+##Exercise 5 - Introduction of an unreliable ```PingServer``` actor
+
+Let's make ```PingServer``` a bit unreliable by having it not send a reply to a ```Ping``` message at random: 
+
+- Define a configuration parameter named ```AkkaNetworkPing.Response.reliability``` with a value between 0 and 100.
+- Change the signature of ```PingServer``` as to accept the ```reliability``` parameter of type ```Int```.
+- Change the behaviour of ```PingServer``` so that when it receives a ```Ping```, it throws a dice by generating a random number between 0 and 100. If this number is greater than ```reliability```, respond. Otherwise, ignore the message and continue waiting for a new ```Ping```.
 
 
