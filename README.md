@@ -98,6 +98,11 @@ In the proposed solution, we make sure that the ```PingServer``` actor is really
 
 An alternative for the utilisation of mutable state in the ```Pinger``` actor.
 
+##Exercise 4 - Scale the ```PingServer``` actor
+
+As observed during some testing, the single instance of the ```PingServer``` actor has become a limiting factor for the ping-pong throughput.
+
+Use a pooled router with round-robin routing strategy configured via Akka configuration to scale the app.
 
 
 
