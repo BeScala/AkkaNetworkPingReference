@@ -52,5 +52,6 @@ class NetworkPingApp(system: ActorSystem) extends CommandReader {
       networkPingCoordinator ! PingResponseCoordinator.CreatePinger(pingCount, pingInterval)
 
   protected def status(): Unit =
+    // TODO: Implement status -  it should log a message @ info showing the number of Pinger actors currently running
     log.info("Status command")
 }

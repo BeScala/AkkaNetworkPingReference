@@ -5,6 +5,8 @@ import akka.actor.{Props, ActorRef, ActorLogging, Actor}
 import scala.concurrent.duration.{ MILLISECONDS => MS, Duration}
 
 object PingMaster {
+  case object GetStatus
+  case class  Status(nPingers: Int)
 
   def props(pingServer: ActorRef): Props = Props(new PingMaster(pingServer))
 }

@@ -170,3 +170,21 @@ Your tasks:
 Note that the ```decider``` in actor ```Pinger``` *captures* the ```TimeoutException``` and specifies that the faulty actor should be stopped. Also, for bookkeeping purposes, it sends a ```PingTimedout``` message to itself which in turn leads to an update of the internal state of the actor.
 
 
+## Exercise 8 - Using the Akka ask pattern
+
+The ask pattern can be used to asynchronously get a response to a message sent to an actor.
+
+We will use this to get the number of ```Pinger``` actors at a particular moment in time.
+
+You will get this information from the ```PingMain``` actor by sending it a ```GetStatus``` (case object) defined in ```PingMain```. This actor should respond with a ```Status``` message holding the requested count. Hence, this should be reflected in the behaviour of the ```PingMain``` actor.
+
+You will need to obtain the ActorRef for actor ```PingMain```. Have a look at ```ActorSelection``` in ```ActorSystem```.
+
+Also note that ```ask``` needs the following in order to function:
+
+- an (implicit) ```Timeout``` value.
+- an (implicit) Execution context.
+
+An ```ask``` will return a ```Future``` giving you a handle to a (future) result. Note that due to type erasure, you will need to apply ```mapTo``` to indicate the correct return type. Next, you'll finish things off by installing callbacks on it to handle successful completion or failure.
+
+
