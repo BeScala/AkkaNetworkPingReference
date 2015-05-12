@@ -187,4 +187,6 @@ Also note that ```ask``` needs the following in order to function:
 
 An ```ask``` will return a ```Future``` giving you a handle to a (future) result. Note that due to type erasure, you will need to apply ```mapTo``` to indicate the correct return type. Next, you'll finish things off by installing callbacks on it to handle successful completion or failure.
 
+##Exercise 8 - Solution & discussion
 
+Congrats - you made it !!!

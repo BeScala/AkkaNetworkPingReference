@@ -18,5 +18,7 @@ class PingMaster(pingServer: ActorRef) extends Actor with ActorLogging {
   override def receive: Receive = {
     case PingResponseCoordinator.CreatePinger(pingCount, pingInterval) =>
       context.actorOf(Pinger.props(pingServer, pingCount, pingInterval, pingTimeout))
+    case PingMaster.GetStatus =>
+      sender ! PingMaster.Status(context.children.size)
   }
 }

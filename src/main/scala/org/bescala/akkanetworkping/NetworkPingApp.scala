@@ -2,9 +2,11 @@ package org.bescala.akkanetworkping
 
 import akka.actor.ActorSystem
 import akka.event.Logging
+import akka.util.Timeout
 
 import scala.annotation.tailrec
 import scala.io.StdIn
+import scala.util.{Failure, Success}
 
 object NetworkPingApp {
 
@@ -51,7 +53,18 @@ class NetworkPingApp(system: ActorSystem) extends CommandReader {
     for ( _ <- 1 to pingerCount)
       networkPingCoordinator ! PingResponseCoordinator.CreatePinger(pingCount, pingInterval)
 
-  protected def status(): Unit =
-    // TODO: Implement status -  it should log a message @ info showing the number of Pinger actors currently running
-    log.info("Status command")
+  protected def status(): Unit = {
+    import scala.concurrent.duration._
+    implicit val askTimeout: Timeout = Timeout(1 second)
+    import akka.pattern.ask
+    import system.dispatcher
+
+    val pingMaster = system.actorSelection("/user/networkPingCoordinator/pingMaster")
+    (pingMaster ? PingMaster.GetStatus).mapTo[PingMaster.Status] onComplete {
+      case Success(status) =>
+        log.info("Status: # pinger actors = {}", status.nPingers)
+      case Failure(askException) =>
+        log.error(askException, "Couldn't get status")
+    }
+  }
 }
