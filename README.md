@@ -148,5 +148,13 @@ Implement the task in the following steps:
   
 Run the application and verify if it works as expected. Set the configuration parameters in such a way that a timeout is triggered and observe what happens. Is the observed behaviour the desired one ?
 
+##Exercise 6 - Solution & discussion
+
+When ```PingServer```'s reliability is set to a low level (e.g. 50), time-outs can be triggered easily. What we see in that case is that the default Akka SupervisoryStragegy is to restart a failed actor. This is clearly not what is needed: the ```PingerWorker``` actor should be stopped instead.
+
+Let's correct this in the next exercise.
+
+
+
 
 

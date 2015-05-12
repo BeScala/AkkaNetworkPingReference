@@ -20,5 +20,5 @@ class PingerSpec extends BaseAkkaSpec {
   }
 
   def createPinger(pingServer: ActorRef, nPings: Int, pingIntervalMS: Int): ActorRef =
-    system.actorOf(Pinger.props(pingServer, nPings, pingIntervalMS))
+    system.actorOf(Pinger.props(pingServer, nPings, pingIntervalMS, 9999 seconds))
 }
