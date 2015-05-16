@@ -210,9 +210,12 @@ You've covered a lot of important features of Akka while solving the exercises i
 You might extend ```AkkaNetworkPing``` by:
 
 - Implementing retrying the sending of ```Ping``` messages in case no (```Response```) is replied within a certain time.
+- Keep track of the number of ping requests, actual pings sent, number of timeouts.
+- Report of the stats by extending the stats command
 - Implement ```Pinger```, ```PingerWorker``` and ```PingServer``` using Akka FSM
 - Adding more tests...
 - Experiment with ```ask```/```pipeTo```
+- ...
 
 Some excellent Akka books to read:
 
