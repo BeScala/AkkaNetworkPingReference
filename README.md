@@ -210,6 +210,7 @@ You've covered a lot of important features of Akka while solving the exercises i
 You might extend ```AkkaNetworkPing``` by:
 
 - Implementing retrying the sending of ```Ping``` messages in case no (```Response```) is replied within a certain time.
+- Implement ```Pinger```, ```PingerWorker``` and ```PingServer``` using Akka FSM
 - Adding more tests...
 - Experiment with ```ask```/```pipeTo```
 
