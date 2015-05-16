@@ -190,3 +190,33 @@ An ```ask``` will return a ```Future``` giving you a handle to a (future) result
 ##Exercise 8 - Solution & discussion
 
 Congrats - you made it !!!
+
+##What's next ?
+
+You've covered a lot of important features of Akka while solving the exercises in this hacking session. Do note however that there's a *lot* more to cover such as:
+
+- Akka FSM & FSMLogging
+- ```ask``` pattern in combination with ```pipeTo```
+- Pooled router versus Group router & different routing strategies
+- Supervisor strategies - ```OneForOneStrategy``` versus ```OneForAllStrategy```
+- Akka persistence
+- Local versus Remote deployment
+- Akka clustering
+- Akka sharding
+- ....
+
+##Suggestions for further exploration
+
+You might extend ```AkkaNetworkPing``` by:
+
+- Implementing retrying the sending of ```Ping``` messages in case no (```Response```) is replied within a certain time.
+- Adding more tests...
+- Experiment with ```ask```/```pipeTo```
+
+Some excellent Akka books to read:
+
+- [Effective Akka by Jamie Allen](http://shop.oreilly.com/product/0636920028789.do)
+- [Akka Concurrency by Derek Wyatt](http://www.artima.com/shop/akka_concurrency)
+- [Learning Concurrent Programming in Scala by Aleksandar Prokopec](https://www.packtpub.com/application-development/learning-concurrent-programming-scala)
+
+
